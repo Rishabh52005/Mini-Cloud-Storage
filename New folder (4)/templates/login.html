@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Login | SkyShelf{% endblock %}
+
+{% block content %}
+<section class="auth-shell">
+    <div class="auth-panel reveal">
+        <p class="eyebrow">Welcome Back</p>
+        <h1>Sign in to your personal file hub.</h1>
+        <p class="lead">Upload new assets, manage existing ones, and share public links from one place.</p>
+    </div>
+
+    <div class="auth-card reveal reveal-delay">
+        <h2>Login</h2>
+        <form method="post" class="stack-form">
+            <label>
+                <span>Username</span>
+                <input type="text" name="username" required>
+            </label>
+            <label>
+                <span>Password</span>
+                <input type="password" name="password" required>
+            </label>
+            <button type="submit" class="button button-primary button-block">Sign In</button>
+        </form>
+        <p class="form-note">
+            Need an account?
+            <a href="{{ url_for('register') }}">Create one here</a>.
+        </p>
+    </div>
+</section>
+{% endblock %}

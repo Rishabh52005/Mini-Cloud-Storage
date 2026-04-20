@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}SkyShelf | Mini Drive in Python{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-copy reveal">
+        <p class="eyebrow">Cloud-based file sharing in Python</p>
+        <h1>Your own mini Drive, with upload, access control, and instant share links.</h1>
+        <p class="lead">
+            SkyShelf is a lightweight file hub for teams, classes, demos, and side projects.
+            Create an account, upload your files, and publish public links whenever you want.
+        </p>
+        <div class="hero-actions">
+            <a href="{{ url_for('register') }}" class="button button-primary">Launch Your Drive</a>
+            <a href="{{ url_for('login') }}" class="button button-ghost">Sign In</a>
+        </div>
+    </div>
+
+    <div class="hero-preview reveal reveal-delay">
+        <div class="preview-card preview-top">
+            <span class="preview-label">Storage Pulse</span>
+            <strong>Secure uploads</strong>
+            <p>Files stay tied to the owner account until you explicitly share them.</p>
+        </div>
+        <div class="preview-card preview-bottom">
+            <span class="preview-label">Public Access</span>
+            <strong>One-click share links</strong>
+            <p>Switch public access on or off anytime from the dashboard.</p>
+        </div>
+    </div>
+</section>
+
+<section class="feature-grid">
+    <article class="feature-card reveal">
+        <h2>Account-Based Access</h2>
+        <p>Each user gets a private dashboard backed by SQLite and server-side sessions.</p>
+    </article>
+    <article class="feature-card reveal">
+        <h2>Direct Downloads</h2>
+        <p>Download your own files anytime, or expose them through a public shared route.</p>
+    </article>
+    <article class="feature-card reveal">
+        <h2>Simple to Run</h2>
+        <p>Built with Flask, local storage, and a single database file so it is easy to learn and extend.</p>
+    </article>
+</section>
+{% endblock %}

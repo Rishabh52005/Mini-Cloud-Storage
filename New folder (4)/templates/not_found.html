@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Not Found | SkyShelf{% endblock %}
+
+{% block content %}
+<section class="share-shell reveal">
+    <p class="eyebrow">404</p>
+    <h1>That page or file could not be found.</h1>
+    <p class="lead">The link may be expired, revoked, or typed incorrectly.</p>
+    <a href="{{ url_for('home') }}" class="button button-primary">Back to Home</a>
+</section>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Register | SkyShelf{% endblock %}
+
+{% block content %}
+<section class="auth-shell">
+    <div class="auth-panel reveal">
+        <p class="eyebrow">Build Your Space</p>
+        <h1>Create an account and start sharing files in minutes.</h1>
+        <p class="lead">This starter app keeps the flow intentionally simple so you can customize it into your own cloud drive product.</p>
+    </div>
+
+    <div class="auth-card reveal reveal-delay">
+        <h2>Create Account</h2>
+        <form method="post" class="stack-form">
+            <label>
+                <span>Username</span>
+                <input type="text" name="username" minlength="3" required>
+            </label>
+            <label>
+                <span>Password</span>
+                <input type="password" name="password" minlength="6" required>
+            </label>
+            <button type="submit" class="button button-primary button-block">Create Account</button>
+        </form>
+        <p class="form-note">
+            Already registered?
+            <a href="{{ url_for('login') }}">Login instead</a>.
+        </p>
+    </div>
+</section>
+{% endblock %}

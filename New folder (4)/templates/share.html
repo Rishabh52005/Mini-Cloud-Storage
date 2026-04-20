@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Shared File | SkyShelf{% endblock %}
+
+{% block content %}
+<section class="share-shell reveal">
+    <p class="eyebrow">Public Share</p>
+    <h1>{{ shared_file["original_name"] }}</h1>
+    <p class="lead">
+        Shared by <strong>{{ shared_file["username"] }}</strong> on {{ shared_file["uploaded_at"] | humandate }}.
+    </p>
+
+    <div class="share-card">
+        <div class="share-card-meta">
+            <span>{{ shared_file["mime_type"] }}</span>
+            <span>{{ shared_file["size"] | filesize }}</span>
+        </div>
+        <a href="{{ url_for('public_download', token=share_token) }}" class="button button-primary">
+            Download File
+        </a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | SkyShelf{% endblock %}
+
+{% block content %}
+<section class="dashboard-hero reveal">
+    <div>
+        <p class="eyebrow">Dashboard</p>
+        <h1>{{ g.user["username"] }}'s cloud shelf</h1>
+        <p class="lead">Upload files, keep them private by default, then publish share links only when you need them.</p>
+    </div>
+    <div class="dashboard-badge">
+        <span>{{ stats["file_count"] }}</span>
+        <small>files stored</small>
+    </div>
+</section>
+
+<section class="stats-grid">
+    <article class="stat-card reveal">
+        <span class="stat-label">Files</span>
+        <strong>{{ stats["file_count"] }}</strong>
+        <p>Your current library size.</p>
+    </article>
+    <article class="stat-card reveal reveal-delay">
+        <span class="stat-label">Storage Used</span>
+        <strong>{{ stats["storage_used"] | filesize }}</strong>
+        <p>Total data saved on disk.</p>
+    </article>
+    <article class="stat-card reveal reveal-delay-2">
+        <span class="stat-label">Public Links</span>
+        <strong>{{ stats["public_files"] }}</strong>
+        <p>Files currently shared to anyone with the link.</p>
+    </article>
+</section>
+
+<section class="upload-panel reveal">
+    <div>
+        <p class="eyebrow">Upload Zone</p>
+        <h2>Add a new file</h2>
+        <p>Any uploaded file stays private until you enable a share link.</p>
+    </div>
+
+    <form method="post" action="{{ url_for('upload_file') }}" enctype="multipart/form-data" class="upload-form">
+        <label class="file-input-shell">
+            <span>Choose file</span>
+            <input type="file" name="file" required>
+        </label>
+        <button type="submit" class="button button-primary">Upload</button>
+    </form>
+</section>
+
+<section class="library-section">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Library</p>
+            <h2>Your files</h2>
+        </div>
+        <p class="section-caption">Share, download, and remove files from here.</p>
+    </div>
+
+    {% if files %}
+        <div class="file-list">
+            {% for file in files %}
+                <article class="file-card reveal">
+                    <div class="file-meta">
+                        <div class="file-avatar">{{ file["original_name"][0] | upper }}</div>
+                        <div>
+                            <h3>{{ file["original_name"] }}</h3>
+                            <p>{{ file["mime_type"] }} &middot; {{ file["size"] | filesize }} &middot; Uploaded {{ file["uploaded_at"] | humandate }}</p>
+                        </div>
+                    </div>
+
+                    <div class="file-actions">
+                        <a href="{{ url_for('download_file', file_id=file['id']) }}" class="button button-ghost button-small">Download</a>
+
+                        {% if file["is_public"] %}
+                            <form method="post" action="{{ url_for('revoke_share', file_id=file['id']) }}">
+                                <button type="submit" class="button button-small">Revoke Link</button>
+                            </form>
+                        {% else %}
+                            <form method="post" action="{{ url_for('share_file', file_id=file['id']) }}">
+                                <button type="submit" class="button button-primary button-small">Share Link</button>
+                            </form>
+                        {% endif %}
+
+                        <form method="post" action="{{ url_for('delete_file', file_id=file['id']) }}">
+                            <button type="submit" class="button button-danger button-small">Delete</button>
+                        </form>
+                    </div>
+
+                    {% if file["is_public"] and file["share_token"] %}
+                        <div class="share-link-row">
+                            <input
+                                type="text"
+                                value="{{ url_for('public_share', token=file['share_token'], _external=True) }}"
+                                readonly
+                            >
+                            <button
+                                type="button"
+                                class="button button-ghost button-small copy-button"
+                                data-copy-text="{{ url_for('public_share', token=file['share_token'], _external=True) }}"
+                            >
+                                Copy Link
+                            </button>
+                        </div>
+                    {% endif %}
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <article class="empty-state reveal">
+            <h3>No files yet</h3>
+            <p>Upload your first file to turn this dashboard into your own mini Drive.</p>
+        </article>
+    {% endif %}
+</section>
+{% endblock %}
